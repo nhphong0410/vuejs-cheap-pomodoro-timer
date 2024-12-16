@@ -1,20 +1,20 @@
 <script lang='ts' setup>
-import { ButtonType } from '@/utils/enums'
+import { EButtonTypes } from '@/utils/enums'
 import { computed } from 'vue'
 
 export type ButtonProps = {
-  type?: ButtonType;
+  type?: EButtonTypes;
   active?: boolean;
 }
 
 const props = defineProps<ButtonProps>()
 
-const buttonType = computed(() => props.type ?? ButtonType.Contained)
+const buttonType = computed(() => props.type ?? EButtonTypes.Contained)
 const isActive = computed(() => props.active ?? false)
 
-const isContainedButton = computed(() => buttonType.value === ButtonType.Contained)
-const isTextButton = computed(() => buttonType.value === ButtonType.Text)
-const isTabButton = computed(() => buttonType.value === ButtonType.Tab)
+const isContainedButton = computed(() => buttonType.value === EButtonTypes.Contained)
+const isTextButton = computed(() => buttonType.value === EButtonTypes.Text)
+const isTabButton = computed(() => buttonType.value === EButtonTypes.Tab)
 
 const buttonClasses = computed(() => ({
   'contained-button': isContainedButton.value,

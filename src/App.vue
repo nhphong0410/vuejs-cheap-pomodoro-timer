@@ -4,31 +4,31 @@ import { ref } from 'vue'
 import ButtonComponent from './components/ButtonComponent.vue'
 import ProgressComponent from './components/ProgressComponent.vue'
 import TimerComponent from './components/TimerComponent.vue'
-import { ButtonType, Tabs } from './utils/enums'
+import { EButtonTypes, ESnoozeTimes, ETabs } from './utils/enums'
 
-const activeTab = ref<Tabs>(Tabs.Focus)
+const activeTab = ref<ETabs>(ETabs.Focus)
 
-const isActive = (tab: Tabs) => activeTab.value === tab
-const handleTabClick = (tab: Tabs) => activeTab.value = tab
+const isActive = (tab: ETabs) => activeTab.value === tab
+const handleTabClick = (tab: ETabs) => activeTab.value = tab
 </script>
 
 <template>
   <main class='main'>
     <div class='container'>
       <div class='type-buttons-container'>
-        <template v-for='tab in Object.values(Tabs)' :key='tab'>
-          <ButtonComponent :type='ButtonType.Tab' :active='isActive(tab)' @onClick='handleTabClick(tab)'>
-            {{ tab }}
+        <template v-for='(value) in ETabs' :key='value'>
+          <ButtonComponent :type='EButtonTypes.Tab' :active='isActive(value)' @onClick='handleTabClick(value)'>
+            {{ value }}
           </ButtonComponent>
         </template>
       </div>
       <TimerComponent />
       <ProgressComponent />
-      <div class='add-time-buttons-container'>
-        <ButtonComponent :type='ButtonType.Text'>+ 25 min</ButtonComponent>
-        <ButtonComponent :type='ButtonType.Text'>+ 10 min</ButtonComponent>
-        <ButtonComponent :type='ButtonType.Text'>+ 5 min</ButtonComponent>
-        <ButtonComponent :type='ButtonType.Text'>+ 1 min</ButtonComponent>
+      <div class='snooze-buttons-container'>
+        <template v-for='(value) in ESnoozeTimes' :key='value'>
+          <ButtonComponent :type='EButtonTypes.Text'>+ {{ value }} min{{ Number(value) > 1 ? 's' : '' }}
+          </ButtonComponent>
+        </template>
       </div>
       <div class='controls-container'>
         <ButtonComponent>{{ 'Start' }}</ButtonComponent>
@@ -64,7 +64,7 @@ const handleTabClick = (tab: Tabs) => activeTab.value = tab
   gap: 1rem;
 }
 
-.add-time-buttons-container {
+.snooze-buttons-container {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 0.5rem;
