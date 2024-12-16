@@ -1,5 +1,5 @@
 <script lang='ts' setup>
-import { ButtonType } from '@/utils/types'
+import { ButtonType } from '@/utils/enums'
 import { computed } from 'vue'
 
 export type ButtonProps = {
@@ -25,7 +25,6 @@ const buttonClasses = computed(() => ({
 </script>
 
 <template>
-  {{ buttonType }}
   <button :class='buttonClasses' @click='$emit("onClick")'>
     <slot></slot>
   </button>
@@ -39,7 +38,7 @@ button {
   font-size: 1rem;
   cursor: pointer;
   color: #aaaaaa;
-  transition: all 0.1s linear;
+  transition: background-color 0.1s linear, color 0.1s linear;
 }
 
 button:hover {

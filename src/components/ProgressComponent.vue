@@ -18,5 +18,6 @@
 .progress-bar {
   height: 100%;
   background-color: #666666;
+  transition: width 0.1s linear;
 }
 </style>
