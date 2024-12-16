@@ -59,4 +59,8 @@ button:hover {
 .tab-button {
   background-color: transparent;
 }
+
+.text-button {
+  padding: 0.125rem;
+}
 </style>

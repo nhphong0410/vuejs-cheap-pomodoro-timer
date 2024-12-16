@@ -1,28 +1,40 @@
 <script setup lang='ts'>
-import { computed, ref } from 'vue';
+import { ref } from 'vue'
 
-import ButtonComponent from './components/ButtonComponent.vue';
+import ButtonComponent from './components/ButtonComponent.vue'
 import ProgressComponent from './components/ProgressComponent.vue'
 import TimerComponent from './components/TimerComponent.vue'
-import { ButtonType, Tabs } from './utils/enums';
+import { ButtonType, Tabs } from './utils/enums'
 
-const activeTab = ref<Tabs>(Tabs.Focus);
+const activeTab = ref<Tabs>(Tabs.Focus)
 
-const isFocus = computed(() => activeTab.value === Tabs.Focus)
-const isShortBreak = computed(() => activeTab.value === Tabs.ShortBreak)
-const isLongBreak = computed(() => activeTab.value === Tabs.LongBreak)
+const isActive = (tab: Tabs) => activeTab.value === tab
+const handleTabClick = (tab: Tabs) => activeTab.value = tab
 </script>
 
 <template>
   <main class='main'>
     <div class='container'>
       <div class='type-buttons-container'>
-        <ButtonComponent :type='ButtonType.Tab' :active='isFocus'>{{ Tabs.Focus }}</ButtonComponent>
-        <ButtonComponent :type='ButtonType.Tab' :active='isShortBreak'>{{ Tabs.ShortBreak }}</ButtonComponent>
-        <ButtonComponent :type='ButtonType.Tab' :active='isLongBreak'>{{ Tabs.LongBreak }}</ButtonComponent>
+        <template v-for='tab in Object.values(Tabs)' :key='tab'>
+          <ButtonComponent :type='ButtonType.Tab' :active='isActive(tab)' @onClick='handleTabClick(tab)'>
+            {{ tab }}
+          </ButtonComponent>
+        </template>
       </div>
       <TimerComponent />
       <ProgressComponent />
+      <div class='add-time-buttons-container'>
+        <ButtonComponent :type='ButtonType.Text'>+ 25 min</ButtonComponent>
+        <ButtonComponent :type='ButtonType.Text'>+ 10 min</ButtonComponent>
+        <ButtonComponent :type='ButtonType.Text'>+ 5 min</ButtonComponent>
+        <ButtonComponent :type='ButtonType.Text'>+ 1 min</ButtonComponent>
+      </div>
+      <div class='controls-container'>
+        <ButtonComponent>{{ 'Start' }}</ButtonComponent>
+        <ButtonComponent>{{ 'Pause' }}</ButtonComponent>
+        <ButtonComponent>{{ 'Reset' }}</ButtonComponent>
+      </div>
     </div>
   </main>
 </template>
@@ -47,6 +59,18 @@ const isLongBreak = computed(() => activeTab.value === Tabs.LongBreak)
 }
 
 .type-buttons-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.add-time-buttons-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+}
+
+.controls-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
