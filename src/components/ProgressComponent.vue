@@ -1,8 +1,18 @@
-<script lang='ts' setup></script>
+<script lang='ts' setup>
+import { useTimerStore } from '@/stores/timer';
+import { storeToRefs } from 'pinia';
+import { computed } from 'vue';
+
+const timerStore = useTimerStore()
+
+const { timer } = storeToRefs(timerStore)
+
+const progress = computed(() => ((1 - timer.value.remain / timer.value.total) * 100).toFixed(2))
+</script>
 
 <template>
   <div class='progress-container'>
-    <div class='progress-bar' style="width: 50%;"></div>
+    <div class='progress-bar' :style='{ width: progress + "%" }'></div>
   </div>
 </template>
 
@@ -18,6 +28,6 @@
 .progress-bar {
   height: 100%;
   background-color: #666666;
-  transition: width 0.1s linear;
+  transition: width 0.3s linear;
 }
 </style>

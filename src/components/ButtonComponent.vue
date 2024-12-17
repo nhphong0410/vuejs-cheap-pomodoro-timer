@@ -41,7 +41,7 @@ button {
   font-size: 1rem;
   cursor: pointer;
   color: #aaaaaa;
-  transition: background-color 0.1s linear, color 0.1s linear;
+  transition: background-color 0.3s linear, color 0.3s linear;
 }
 
 button:hover {
