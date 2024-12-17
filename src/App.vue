@@ -24,6 +24,11 @@ const handleStart = () => timerStore.start()
 const handlePause = () => timerStore.pause()
 const handleReset = () => {
   timerStore.reset()
+
+  if (activeTab.value === ETabs.Focus) {
+    timerStore.setTimer({ amount: TimerAmounts[ETabs.Focus] })
+  }
+
   activeTab.value = ETabs.Focus
 }
 
