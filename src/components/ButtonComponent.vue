@@ -1,6 +1,6 @@
 <script lang='ts' setup>
-import { EButtonTypes } from '@/utils/enums'
 import { computed } from 'vue'
+import { EButtonTypes } from '@/utils/enums'
 
 export type ButtonProps = {
   type?: EButtonTypes;

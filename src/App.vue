@@ -4,16 +4,23 @@ import { ref } from 'vue'
 import ButtonComponent from './components/ButtonComponent.vue'
 import ProgressComponent from './components/ProgressComponent.vue'
 import TimerComponent from './components/TimerComponent.vue'
-import { EButtonTypes, ETabs } from './utils/enums'
 
-const snoozeTimes = [25, 10, 5, 1]
+import { EButtonTypes, ETabs } from './utils/enums'
+import { useTimerStore } from './stores/timer'
 
 const activeTab = ref<ETabs>(ETabs.Focus)
+
+const timerStore = useTimerStore()
+
+const snoozeTimes = [25, 10, 5, 1]
 
 const isActive = (tab: ETabs) => activeTab.value === tab
 const snoozeButtonPostFix = (time: number) => Number(time) > 1 ? 's' : ''
 
-const handleTabClick = (tab: ETabs) => activeTab.value = tab
+const handleTabClick = (tab: ETabs) => {
+  activeTab.value = tab
+  timerStore.updateTimerFromTab(tab)
+}
 </script>
 
 <template>

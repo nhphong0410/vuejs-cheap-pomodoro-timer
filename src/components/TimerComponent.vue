@@ -1,12 +1,18 @@
-<script lang='ts' setup></script>
+<script lang='ts' setup>
+import { useTimerStore } from '@/stores/timer';
+
+const timerStore = useTimerStore()
+
+const formatTime = (time: number) => time.toString().padStart(2, '0')
+</script>
 
 <template>
   <div class='timer-container'>
-    <span>01</span>
+    <span>{{ formatTime(timerStore.timer.h) }}</span>
     <span>:</span>
-    <span>59</span>
+    <span>{{ formatTime(timerStore.timer.m) }}</span>
     <span>:</span>
-    <span>59</span>
+    <span>{{ formatTime(timerStore.timer.s) }}</span>
   </div>
 </template>
 
