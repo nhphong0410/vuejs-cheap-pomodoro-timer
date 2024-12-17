@@ -18,15 +18,10 @@ const snoozeTimes = [25, 10, 5, 1]
 const isActive = (tab: ETabs) => activeTab.value === tab
 const snoozeButtonPostFix = (time: number) => Number(time) > 1 ? 's' : ''
 
-const handleTabClick = (tab: ETabs) => {
-  activeTab.value = tab
-}
-const handleStart = () => {
-  timerStore.start()
-}
-const handlePause = () => {
-  timerStore.pause()
-}
+const handleTabClick = (tab: ETabs) => activeTab.value = tab
+
+const handleStart = () => timerStore.start()
+const handlePause = () => timerStore.pause()
 const handleReset = () => {
   timerStore.reset()
   activeTab.value = ETabs.Focus
