@@ -57,9 +57,9 @@ watch(
         </template>
       </div>
       <div class='controls-container'>
-        <ButtonComponent @onClick='handleStart'>{{ 'Start' }}</ButtonComponent>
-        <ButtonComponent @onClick='handlePause'>{{ 'Pause' }}</ButtonComponent>
-        <ButtonComponent @onClick='handleReset'>{{ 'Reset' }}</ButtonComponent>
+        <ButtonComponent @onClick='handleStart'>Start</ButtonComponent>
+        <ButtonComponent @onClick='handlePause'>Pause</ButtonComponent>
+        <ButtonComponent @onClick='handleReset'>Reset</ButtonComponent>
       </div>
     </div>
   </main>
