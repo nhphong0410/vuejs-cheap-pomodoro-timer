@@ -28,6 +28,6 @@ const progress = computed(() => ((1 - timer.value.remain / timer.value.total) * 
 .progress-bar {
   height: 100%;
   background-color: #666666;
-  transition: width 0.3s linear;
+  transition: width 0.3s ease-out;
 }
 </style>
