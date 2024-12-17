@@ -8,11 +8,11 @@ const formatTime = (time: number) => time.toString().padStart(2, '0')
 
 <template>
   <div class='timer-container'>
-    <span>{{ formatTime(timerStore.timer.h) }}</span>
+    <span>{{ formatTime(timerStore.h) }}</span>
     <span>:</span>
-    <span>{{ formatTime(timerStore.timer.m) }}</span>
+    <span>{{ formatTime(timerStore.m) }}</span>
     <span>:</span>
-    <span>{{ formatTime(timerStore.timer.s) }}</span>
+    <span>{{ formatTime(timerStore.s) }}</span>
   </div>
 </template>
 

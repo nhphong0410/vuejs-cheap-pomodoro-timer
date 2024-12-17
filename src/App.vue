@@ -1,5 +1,5 @@
 <script setup lang='ts'>
-import { onBeforeMount, ref } from 'vue'
+import { ref, watch } from 'vue'
 
 import ButtonComponent from './components/ButtonComponent.vue'
 import ProgressComponent from './components/ProgressComponent.vue'
@@ -7,6 +7,7 @@ import TimerComponent from './components/TimerComponent.vue'
 
 import { EButtonTypes, ETabs } from './utils/enums'
 import { useTimerStore } from './stores/timer'
+import { TimerAmounts } from './utils/constants'
 
 const activeTab = ref<ETabs>(ETabs.Focus)
 
@@ -19,7 +20,6 @@ const snoozeButtonPostFix = (time: number) => Number(time) > 1 ? 's' : ''
 
 const handleTabClick = (tab: ETabs) => {
   activeTab.value = tab
-  timerStore.updateTimerFromTab(tab)
 }
 const handleStart = () => {
   timerStore.start()
@@ -29,12 +29,14 @@ const handlePause = () => {
 }
 const handleReset = () => {
   timerStore.reset()
-  handleTabClick(ETabs.Focus)
+  activeTab.value = ETabs.Focus
 }
 
-onBeforeMount(() => {
-  timerStore.updateTimerFromTab(activeTab.value)
-})
+watch(
+  activeTab,
+  () => timerStore.setTimer({ amount: TimerAmounts[activeTab.value] }),
+  { immediate: true }
+)
 </script>
 
 <template>
@@ -51,7 +53,7 @@ onBeforeMount(() => {
       <ProgressComponent />
       <div class='snooze-buttons-container'>
         <template v-for='value in snoozeTimes' :key='value'>
-          <ButtonComponent :type='EButtonTypes.Text' @onClick='timerStore.snooze({ m: value })'>
+          <ButtonComponent :type='EButtonTypes.Text' @onClick='timerStore.add({ amount: value * 60 })'>
             + {{ value }} min{{ snoozeButtonPostFix(value) }}
           </ButtonComponent>
         </template>

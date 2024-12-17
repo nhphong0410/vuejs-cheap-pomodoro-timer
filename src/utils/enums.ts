@@ -14,4 +14,5 @@ export enum EStatus {
   Idle = 'idle',
   Running = 'running',
   Paused = 'paused',
+  Finished = 'finished',
 }
