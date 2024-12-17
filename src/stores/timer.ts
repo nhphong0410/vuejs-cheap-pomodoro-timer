@@ -22,6 +22,7 @@ export const useTimerStore = defineStore('timer', () => {
     timer.value = { h: nextH, m: nextM, s: nextS }
   }
   const updateTimerFromTab = (tab: ETabs) => {
+    clearInterval(intervalId)
     updateTimer(TimerAmounts[tab])
   }
   const snooze = ({ h = 0, m = 0, s = 0 }: { h?: number, m?: number, s?: number }) => {
