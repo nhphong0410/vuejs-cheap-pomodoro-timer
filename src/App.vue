@@ -5,7 +5,7 @@ import ButtonComponent from './components/ButtonComponent.vue'
 import ProgressComponent from './components/ProgressComponent.vue'
 import TimerComponent from './components/TimerComponent.vue'
 
-import { EButtonTypes, ETabs } from './utils/enums'
+import { EButtonTypes, EStatus, ETabs } from './utils/enums'
 import { useTimerStore } from './stores/timer'
 import { SNOOZE_TIMES, TIMER_AMOUNTS } from './utils/constants'
 
@@ -57,9 +57,9 @@ watch(
         </template>
       </div>
       <div class='controls-container'>
-        <ButtonComponent @onClick='handleStart'>Start</ButtonComponent>
-        <ButtonComponent @onClick='handlePause'>Pause</ButtonComponent>
-        <ButtonComponent @onClick='handleReset'>Reset</ButtonComponent>
+        <ButtonComponent v-if='timerStore.status !== EStatus.Running' @onClick='handleStart'>Start</ButtonComponent>
+        <ButtonComponent v-if='timerStore.status === EStatus.Running' @onClick='handlePause'>Pause</ButtonComponent>
+        <ButtonComponent v-if='timerStore.status !== EStatus.Idle' @onClick='handleReset'>Reset</ButtonComponent>
       </div>
     </div>
   </main>
@@ -96,8 +96,13 @@ watch(
 }
 
 .controls-container {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
+  justify-content: center;
+  align-items: center;
   gap: 1rem;
+}
+
+.controls-container>button {
+  min-width: 100px;
 }
 </style>
