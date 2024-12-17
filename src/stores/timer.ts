@@ -23,14 +23,14 @@ export const useTimerStore = defineStore('timer', () => {
     }
   }
   const start = () => {
-    if (status.value === EStatus.Running || intervalId.value !== undefined || timer.value.remain === 0) {
-      return
-    }
+    if (status.value === EStatus.Running || intervalId.value || !timer.value.remain) return
 
     intervalId.value = setInterval(countDown, 1000)
     status.value = EStatus.Running
   }
   const pause = () => {
+    if (status.value !== EStatus.Running || !intervalId.value) return
+
     clearInterval(intervalId.value)
     intervalId.value = undefined
     status.value = EStatus.Paused
