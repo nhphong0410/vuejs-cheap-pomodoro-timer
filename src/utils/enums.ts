@@ -9,10 +9,3 @@ export enum ETabs {
   ShortBreak = 'Short Break',
   LongBreak = 'Long Break',
 }
-
-export enum ESnoozeTimes {
-  TwentyFiveMinutes = '25',
-  TenMinutes = '10',
-  FiveMinutes = '5',
-  OneMinute = '1',
-}

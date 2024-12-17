@@ -4,11 +4,15 @@ import { ref } from 'vue'
 import ButtonComponent from './components/ButtonComponent.vue'
 import ProgressComponent from './components/ProgressComponent.vue'
 import TimerComponent from './components/TimerComponent.vue'
-import { EButtonTypes, ESnoozeTimes, ETabs } from './utils/enums'
+import { EButtonTypes, ETabs } from './utils/enums'
+
+const snoozeTimes = [25, 10, 5, 1]
 
 const activeTab = ref<ETabs>(ETabs.Focus)
 
 const isActive = (tab: ETabs) => activeTab.value === tab
+const snoozeButtonPostFix = (time: number) => Number(time) > 1 ? 's' : ''
+
 const handleTabClick = (tab: ETabs) => activeTab.value = tab
 </script>
 
@@ -25,8 +29,9 @@ const handleTabClick = (tab: ETabs) => activeTab.value = tab
       <TimerComponent />
       <ProgressComponent />
       <div class='snooze-buttons-container'>
-        <template v-for='(value) in ESnoozeTimes' :key='value'>
-          <ButtonComponent :type='EButtonTypes.Text'>+ {{ value }} min{{ Number(value) > 1 ? 's' : '' }}
+        <template v-for='value in snoozeTimes' :key='value'>
+          <ButtonComponent :type='EButtonTypes.Text'>
+            + {{ value }} min{{ snoozeButtonPostFix(value) }}
           </ButtonComponent>
         </template>
       </div>
@@ -65,8 +70,7 @@ const handleTabClick = (tab: ETabs) => activeTab.value = tab
 }
 
 .snooze-buttons-container {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  display: flex;
   gap: 0.5rem;
 }
 
