@@ -1,7 +1,7 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 
-import type { ETabs } from '@/utils/enums'
+import { EStatus, ETabs } from '@/utils/enums'
 import { TimerAmounts } from '@/utils/constants'
 
 export const useTimerStore = defineStore('timer', () => {
@@ -10,7 +10,8 @@ export const useTimerStore = defineStore('timer', () => {
     m: 0,
     s: 0
   })
-  let intervalId: number | undefined = undefined;
+  const status = ref<EStatus>(EStatus.Idle)
+  const intervalId = ref<number | undefined>();
 
   const updateTimer = ({ h = 0, m = 0, s = 0 }: { h?: number, m?: number, s?: number }) => {
     let nextS = s
@@ -22,7 +23,7 @@ export const useTimerStore = defineStore('timer', () => {
     timer.value = { h: nextH, m: nextM, s: nextS }
   }
   const updateTimerFromTab = (tab: ETabs) => {
-    clearInterval(intervalId)
+    pause()
     updateTimer(TimerAmounts[tab])
   }
   const snooze = ({ h = 0, m = 0, s = 0 }: { h?: number, m?: number, s?: number }) => {
@@ -30,7 +31,7 @@ export const useTimerStore = defineStore('timer', () => {
   }
   const countDown = () => {
     if (timer.value.h === 0 && timer.value.m === 0 && timer.value.s === 0) {
-      clearInterval(intervalId)
+      pause()
       return
     }
 
@@ -49,16 +50,30 @@ export const useTimerStore = defineStore('timer', () => {
 
     updateTimer({ h: nextH, m: nextM, s: nextS })
   }
-  const startCountDown = () => {
-    clearInterval(intervalId)
-    intervalId = setInterval(countDown, 1000)
+  const start = () => {
+    if (status.value === EStatus.Running || intervalId.value !== undefined) {
+      return
+    }
+    intervalId.value = setInterval(countDown, 1000)
+    status.value = EStatus.Running
+  }
+  const pause = () => {
+    clearInterval(intervalId.value)
+    intervalId.value = undefined
+    status.value = EStatus.Paused
+  }
+  const reset = () => {
+    pause()
+    status.value = EStatus.Idle
   }
 
   return {
     timer,
-    intervalId,
+    status,
     updateTimerFromTab,
     snooze,
-    startCountDown
+    start,
+    pause,
+    reset
   }
 })

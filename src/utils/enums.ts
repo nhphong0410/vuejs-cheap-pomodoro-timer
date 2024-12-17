@@ -9,3 +9,9 @@ export enum ETabs {
   ShortBreak = 'Short Break',
   LongBreak = 'Long Break',
 }
+
+export enum EStatus {
+  Idle = 'idle',
+  Running = 'running',
+  Paused = 'paused',
+}
