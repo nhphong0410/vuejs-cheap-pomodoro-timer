@@ -1,7 +1,19 @@
 import { ETabs } from './enums';
 
 export const TimerAmounts = {
-  [ETabs.Focus]: [0, 25, 0],
-  [ETabs.ShortBreak]: [0, 5, 0],
-  [ETabs.LongBreak]: [0, 15, 0],
+  [ETabs.Focus]: {
+    h: 0,
+    m: 25,
+    s: 0
+  },
+  [ETabs.ShortBreak]: {
+    h: 0,
+    m: 5,
+    s: 0
+  },
+  [ETabs.LongBreak]: {
+    h: 0,
+    m: 15,
+    s: 0
+  },
 }
