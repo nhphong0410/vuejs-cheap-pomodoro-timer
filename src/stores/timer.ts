@@ -25,10 +25,14 @@ export const useTimerStore = defineStore('timer', () => {
   const updateTimerFromTab = (tab: ETabs) => {
     updateTimer(...TimerAmounts[tab])
   }
+  const snooze = ({ h = 0, m = 0, s = 0 }: { h?: number, m?: number, s?: number }) => {
+    updateTimer(timer.value.h + h, timer.value.m + m, timer.value.s + s)
+  }
 
   return {
     timer,
     updateTimer,
-    updateTimerFromTab
+    updateTimerFromTab,
+    snooze
   }
 })

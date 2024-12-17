@@ -1,5 +1,5 @@
 <script setup lang='ts'>
-import { ref } from 'vue'
+import { onBeforeMount, ref } from 'vue'
 
 import ButtonComponent from './components/ButtonComponent.vue'
 import ProgressComponent from './components/ProgressComponent.vue'
@@ -21,6 +21,10 @@ const handleTabClick = (tab: ETabs) => {
   activeTab.value = tab
   timerStore.updateTimerFromTab(tab)
 }
+
+onBeforeMount(() => {
+  timerStore.updateTimerFromTab(activeTab.value)
+})
 </script>
 
 <template>
@@ -37,7 +41,7 @@ const handleTabClick = (tab: ETabs) => {
       <ProgressComponent />
       <div class='snooze-buttons-container'>
         <template v-for='value in snoozeTimes' :key='value'>
-          <ButtonComponent :type='EButtonTypes.Text'>
+          <ButtonComponent :type='EButtonTypes.Text' @onClick='timerStore.snooze({ m: value })'>
             + {{ value }} min{{ snoozeButtonPostFix(value) }}
           </ButtonComponent>
         </template>

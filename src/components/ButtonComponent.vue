@@ -8,6 +8,7 @@ export type ButtonProps = {
 }
 
 const props = defineProps<ButtonProps>()
+const emit = defineEmits(['onClick'])
 
 const buttonType = computed(() => props.type ?? EButtonTypes.Contained)
 const isActive = computed(() => props.active ?? false)
@@ -22,10 +23,12 @@ const buttonClasses = computed(() => ({
   'tab-button': isTabButton.value,
   active: isActive.value
 }))
+
+const handleClick = () => emit('onClick')
 </script>
 
 <template>
-  <button :class='buttonClasses' @click='$emit("onClick")'>
+  <button :class='buttonClasses' @click='handleClick'>
     <slot></slot>
   </button>
 </template>
