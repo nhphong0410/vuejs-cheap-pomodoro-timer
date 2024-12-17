@@ -10,6 +10,7 @@ export const useTimerStore = defineStore('timer', () => {
     m: 0,
     s: 0
   })
+  let intervalId: number | undefined = undefined;
 
   const updateTimer = ({ h = 0, m = 0, s = 0 }: { h?: number, m?: number, s?: number }) => {
     let nextS = s
@@ -28,6 +29,7 @@ export const useTimerStore = defineStore('timer', () => {
   }
   const countDown = () => {
     if (timer.value.h === 0 && timer.value.m === 0 && timer.value.s === 0) {
+      clearInterval(intervalId)
       return
     }
 
@@ -46,12 +48,16 @@ export const useTimerStore = defineStore('timer', () => {
 
     updateTimer({ h: nextH, m: nextM, s: nextS })
   }
+  const startCountDown = () => {
+    clearInterval(intervalId)
+    intervalId = setInterval(countDown, 1000)
+  }
 
   return {
     timer,
-    updateTimer,
+    intervalId,
     updateTimerFromTab,
     snooze,
-    countDown
+    startCountDown
   }
 })

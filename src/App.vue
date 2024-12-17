@@ -21,6 +21,9 @@ const handleTabClick = (tab: ETabs) => {
   activeTab.value = tab
   timerStore.updateTimerFromTab(tab)
 }
+const handleStart = () => {
+  timerStore.startCountDown()
+}
 
 onBeforeMount(() => {
   timerStore.updateTimerFromTab(activeTab.value)
@@ -47,7 +50,7 @@ onBeforeMount(() => {
         </template>
       </div>
       <div class='controls-container'>
-        <ButtonComponent>{{ 'Start' }}</ButtonComponent>
+        <ButtonComponent @onClick='handleStart'>{{ 'Start' }}</ButtonComponent>
         <ButtonComponent>{{ 'Pause' }}</ButtonComponent>
         <ButtonComponent>{{ 'Reset' }}</ButtonComponent>
       </div>

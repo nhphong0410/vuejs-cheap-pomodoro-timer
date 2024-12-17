@@ -13,7 +13,7 @@ export const TimerAmounts = {
   },
   [ETabs.LongBreak]: {
     h: 0,
-    m: 15,
-    s: 0
+    m: 0,
+    s: 3
   },
 }
