@@ -16,23 +16,24 @@ const timerStore = useTimerStore()
 const isActive = (tab: ETabs) => activeTab.value === tab
 const snoozeButtonPostFix = (time: number) => Number(time) > 1 ? 's' : ''
 
-const handleTabClick = (tab: ETabs) => activeTab.value = tab
+const handleTabClick = (tab: ETabs) => {
+  activeTab.value = tab
+  timerStore.reset()
+  resetTimer()
+}
 
 const handleStart = () => timerStore.start()
 const handlePause = () => timerStore.pause()
 const handleReset = () => {
   timerStore.reset()
-
-  if (activeTab.value === ETabs.Focus) {
-    timerStore.setTimer({ amount: TIMER_AMOUNTS[ETabs.Focus] })
-  }
-
-  activeTab.value = ETabs.Focus
+  resetTimer()
 }
+
+const resetTimer = () => timerStore.setTimer({ amount: TIMER_AMOUNTS[activeTab.value] })
 
 watch(
   activeTab,
-  () => timerStore.setTimer({ amount: TIMER_AMOUNTS[activeTab.value] }),
+  () => resetTimer(),
   { immediate: true }
 )
 </script>
